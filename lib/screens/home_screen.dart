@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
+import 'package:whats_movies/screens/widgets/widgets.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -28,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         elevation: 0.0,
         leading: IconButton(
-          onPressed: _showModalBottomSheet,
+          onPressed: _showBottomSheet,
           icon: Icon(
             Icons.menu,
             color: Colors.black,
@@ -60,10 +62,23 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
+      body: Container(
+        color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: MainSearchBox(),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  _showModalBottomSheet() {
+  _showBottomSheet() {
     _scaffoldKey.currentState.showBottomSheet<void>((_) {
       return Container(
         height: 300.0,
