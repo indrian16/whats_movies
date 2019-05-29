@@ -17,6 +17,11 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  
+  equatable: ^0.2.5
+  bloc: ^0.14.1
+  flutter_bloc: ^0.15.0
+
   flutter:
     sdk: flutter
 
