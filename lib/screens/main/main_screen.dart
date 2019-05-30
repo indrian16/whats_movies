@@ -26,6 +26,7 @@ class _MainScreenState extends State<MainScreen> {
           key: _scaffoldKey,
           appBar: AppBar(
             centerTitle: true,
+            elevation: 0.0,
             leading: IconButton(
               onPressed: _openDrawer,
               icon: Icon(Icons.menu),

@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,7 +12,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Home'),
+      color: Colors.white,
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4.0),
+              child: MainSearchBox(),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
