@@ -1,1 +1,1 @@
-export './search_box/main_search_box.dart';
+export './search_box/home_search_box.dart';
