@@ -19,7 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4.0),
               child: HomeSearchBox(),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: TrendingList(),
+            ),
           ],
         ),
       ),
