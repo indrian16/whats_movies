@@ -12,23 +12,20 @@ class _TrendingListState extends State<TrendingList> {
   List<Movie> _sampleData = [
     Movie(
       title: 'Captain Marvel',
+      backdropPath: 'assets/images/captain_marvel.jpg'
     ),
     Movie(
       title: 'Captive State',
+      backdropPath: 'assets/images/captive_state.jpg'
     ),
     Movie(
       title: 'Game of Thrones',
+      backdropPath: 'assets/images/got.jpg'
     ),
     Movie(
       title: 'Aladdin',
+      backdropPath: 'assets/images/aladin.jpg'
     ),
-  ];
-
-  List<String> _sampleImage = [
-    'assets/images/captain_marvel.jpg',
-    'assets/images/captive_state.jpg',
-    'assets/images/got.jpg',
-    'assets/images/aladin.jpg',
   ];
 
   @override
@@ -40,16 +37,13 @@ class _TrendingListState extends State<TrendingList> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, index) {
 
-          return _buildTrendingItem(
-            _sampleData[index],
-            _sampleImage[index]
-          );
+          return _buildTrendingItem(_sampleData[index]);
         },
       ),
     );
   }
 
-  Widget _buildTrendingItem(Movie movie, String path) {
+  Widget _buildTrendingItem(Movie movie) {
 
     return Container(
       width: 255.0,
@@ -64,7 +58,7 @@ class _TrendingListState extends State<TrendingList> {
         child: Stack(
           children: <Widget>[
             Image.asset(
-              path,
+              movie.backdropPath,
               height: double.infinity,
               fit: BoxFit.cover,
             ),

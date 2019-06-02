@@ -63,6 +63,10 @@ flutter:
     - assets/images/captive_state.jpg
     - assets/images/got.jpg
     - assets/images/aladin.jpg
+    - assets/images/p_captain_marvel.jpg
+    - assets/images/p_captive_state.jpg
+    - assets/images/p_got.jpg
+    - assets/images/p_aladdin.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

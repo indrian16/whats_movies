@@ -15,15 +15,86 @@ class _HomeScreenState extends State<HomeScreen> {
       color: Colors.white,
       child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4.0),
               child: HomeSearchBox(),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: TrendingList(),
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Popular',
+                          style: TextStyle(
+                              fontFamily: 'Lato-Bold',
+                              fontSize: 18.0,
+                              color: Colors.black),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            print('goMorePopularMovie()');
+                          },
+                          child: Text(
+                            'See all >',
+                            style: TextStyle(
+                                fontFamily: 'Lato', color: Colors.black),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  PopularList()
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Upcoming',
+                          style: TextStyle(
+                              fontFamily: 'Lato-Bold',
+                              fontSize: 18.0,
+                              color: Colors.black),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            print('goMorePopularMovie()');
+                          },
+                          child: Text(
+                            'See all >',
+                            style: TextStyle(
+                                fontFamily: 'Lato', color: Colors.black),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  PopularList(),
+                  SizedBox(height: 16.0)
+                ],
+              ),
+            )
           ],
         ),
       ),
