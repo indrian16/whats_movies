@@ -34,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
             actions: <Widget>[
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.more_vert),
+                icon: Icon(Icons.search),
               )
             ],
             title: Text(
