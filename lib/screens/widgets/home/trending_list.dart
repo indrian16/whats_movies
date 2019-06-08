@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:whats_movies/blocs/fetch_trendings/bloc.dart';
+import 'package:whats_movies/blocs/trending_movies/bloc.dart';
 import 'package:whats_movies/domains/movie.dart';
 
 class TrendingList extends StatefulWidget {
@@ -11,14 +11,14 @@ class TrendingList extends StatefulWidget {
 }
 
 class _TrendingListState extends State<TrendingList> {
-  FetchtrendingsBloc _trendingsBloc;
+  TrendingMoviesBloc _trendingMoviesBloc;
 
   @override
   void initState() {
     super.initState();
 
-    _trendingsBloc = BlocProvider.of<FetchtrendingsBloc>(context);
-    _trendingsBloc.dispatch(FetchTrendings());
+    _trendingMoviesBloc = BlocProvider.of<TrendingMoviesBloc>(context);
+    _trendingMoviesBloc.dispatch(FetchTrendingMovies());
   }
 
   @override
@@ -26,38 +26,38 @@ class _TrendingListState extends State<TrendingList> {
     return Container(
       height: 175.0,
       child: BlocBuilder(
-        bloc: _trendingsBloc,
-        builder: (BuildContext context, FetchtrendingsState state) {
-          if (state is TrendingsUnitilized) {
+        bloc: _trendingMoviesBloc,
+        builder: (_, TrendingMoviesState state) {
+
+          if (state is TrendingUnitilizedState) {
 
             return Center(child: CircularProgressIndicator());
           }
 
-          if (state is TrendingsLoaded) {
+          if (state is TrendingLoadedState) {
+
             return ListView.builder(
-              itemCount: state.trendings.length,
+              itemCount: state.movies.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index) {
-                return _buildTrendingItem(state.trendings[index]);
+                return _buildTrendingItem(state.movies[index]);
               },
             );
           }
 
-          if (state is TrendingsError) {
-
+          if (state is TrendingErrorState) {
+            
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   IconButton(
-                    onPressed: () => _trendingsBloc.dispatch(FetchTrendings()),
-                    icon: Icon(Icons.refresh, size: 35.0)
-                  ),
+                      onPressed: () =>
+                          _trendingMoviesBloc.dispatch(FetchTrendingMovies()),
+                      icon: Icon(Icons.refresh, size: 35.0)),
                   Text(
                     'Reload Trendings',
-                    style: TextStyle(
-                      fontFamily: 'Lato'
-                    ),
+                    style: TextStyle(fontFamily: 'Lato'),
                   )
                 ],
               ),

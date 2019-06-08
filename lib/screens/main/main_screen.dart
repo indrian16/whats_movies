@@ -2,7 +2,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whats_movies/blocs/upcoming_movies/bloc.dart' as prefix0;
 import 'package:whats_movies/blocs/upcoming_movies/upcomingmovies_bloc.dart';
 
 import 'package:whats_movies/data/api/movie_api.dart';
@@ -10,7 +9,7 @@ import 'package:whats_movies/data/mapper/movie_mapper.dart';
 import 'package:whats_movies/data/repositories/repository.dart';
 import 'package:whats_movies/blocs/menu/bloc.dart';
 import 'package:whats_movies/blocs/menu/menu_bloc.dart';
-import 'package:whats_movies/blocs/fetch_trendings/bloc.dart';
+import 'package:whats_movies/blocs/trending_movies/bloc.dart';
 import 'package:whats_movies/blocs/popular_movies/bloc.dart';
 import 'package:whats_movies/blocs/upcoming_movies/bloc.dart';
 
@@ -29,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   MenuBloc _menuBloc;
-  FetchtrendingsBloc _trendingsBloc;
+  TrendingMoviesBloc _trendingMoviesBloc;
   PopularMoviesBloc _popularMoviesBloc;
   UpcomingMoviesBloc _upcomingMoviesBloc;
 
@@ -41,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
     _repository = Repository(movieApi: _movieApi);
 
     _menuBloc = MenuBloc();
-    _trendingsBloc = FetchtrendingsBloc(repository: _repository);
+    _trendingMoviesBloc = TrendingMoviesBloc(repository: _repository);
     _popularMoviesBloc = PopularMoviesBloc(repository: _repository);
     _upcomingMoviesBloc = UpcomingMoviesBloc(repository: _repository);
   }
@@ -50,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return BlocProviderTree(
       blocProviders: [
-        BlocProvider<FetchtrendingsBloc>(bloc: _trendingsBloc),
+        BlocProvider<TrendingMoviesBloc>(bloc: _trendingMoviesBloc),
         BlocProvider<PopularMoviesBloc>(bloc: _popularMoviesBloc),
         BlocProvider<UpcomingMoviesBloc>(bloc: _upcomingMoviesBloc)
       ],
@@ -200,7 +199,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     _menuBloc.dispose();
-    _trendingsBloc.dispose();
+    _trendingMoviesBloc.dispose();
     _popularMoviesBloc.dispose();
     _upcomingMoviesBloc.dispose();
     super.dispose();
