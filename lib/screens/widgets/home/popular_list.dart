@@ -11,19 +11,19 @@ class _PopularListState extends State<PopularList> {
   List<Movie> _sampleData = [
     Movie(
         title: 'Captain Marvel',
-        backdropPath: 'assets/images/p_captain_marvel.jpg',
+        backdropUrl: 'assets/images/p_captain_marvel.jpg',
         voteAverage: 7.1),
     Movie(
         title: 'Captive State',
-        backdropPath: 'assets/images/p_captive_state.jpg',
+        backdropUrl: 'assets/images/p_captive_state.jpg',
         voteAverage: 4.8),
     Movie(
         title: 'Game of Thrones',
-        backdropPath: 'assets/images/p_got.jpg',
+        backdropUrl: 'assets/images/p_got.jpg',
         voteAverage: 8.1),
     Movie(
         title: 'Aladdin',
-        backdropPath: 'assets/images/p_aladdin.jpg',
+        backdropUrl: 'assets/images/p_aladdin.jpg',
         voteAverage: 7.2),
   ];
 
@@ -57,7 +57,7 @@ class _PopularListState extends State<PopularList> {
             child: Stack(
               children: <Widget>[
                 Image.asset(
-                  movie.backdropPath,
+                  movie.backdropUrl,
                   width: double.infinity,
                   fit: BoxFit.fill,
                 ),

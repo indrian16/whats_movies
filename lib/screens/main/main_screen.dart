@@ -1,9 +1,14 @@
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:whats_movies/data/api/movie_api.dart';
+import 'package:whats_movies/data/mapper/movie_mapper.dart';
+import 'package:whats_movies/data/repositories/repository.dart';
 import 'package:whats_movies/blocs/menu/bloc.dart';
 import 'package:whats_movies/blocs/menu/menu_bloc.dart';
+import 'package:whats_movies/blocs/fetch_trendings/bloc.dart';
 
 import 'package:whats_movies/screens/screens.dart';
 
@@ -13,40 +18,61 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final _client = http.Client();
+  final _movieMapper = MovieMapper();
+  MovieApi _movieApi;
+  Repository _repository;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  MenuBloc _menuBloc = MenuBloc();
+  MenuBloc _menuBloc;
+  FetchtrendingsBloc _trendingsBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _movieApi = MovieApi(client: _client, movieMapper: _movieMapper);
+    _repository = Repository(movieApi: _movieApi);
+
+    _menuBloc = MenuBloc();
+    _trendingsBloc = FetchtrendingsBloc(repository: _repository);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-      bloc: _menuBloc,
-      builder: (_, MenuState state) {
-        return Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-            centerTitle: true,
-            elevation: 0.0,
-            leading: IconButton(
-              onPressed: _openDrawer,
-              icon: Icon(Icons.menu),
+    return BlocProviderTree(
+      blocProviders: [
+        BlocProvider<FetchtrendingsBloc>(bloc: _trendingsBloc)
+      ],
+      child: BlocBuilder(
+        bloc: _menuBloc,
+        builder: (_, MenuState state) {
+          return Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
+              centerTitle: true,
+              elevation: 0.0,
+              leading: IconButton(
+                onPressed: _openDrawer,
+                icon: Icon(Icons.menu),
+              ),
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.search),
+                )
+              ],
+              title: Text(
+                'What Movies',
+                style: TextStyle(fontFamily: 'Lato'),
+              ),
             ),
-            actions: <Widget>[
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.search),
-              )
-            ],
-            title: Text(
-              'What Movies',
-              style: TextStyle(fontFamily: 'Lato'),
-            ),
-          ),
-          body: _bodyScreen(state),
-          drawer: _buildDrawer(),
-          bottomNavigationBar: _buildBottomNav(state),
-        );
-      },
+            body: _bodyScreen(state),
+            drawer: _buildDrawer(),
+            bottomNavigationBar: _buildBottomNav(state),
+          );
+        },
+      ),
     );
   }
 
@@ -71,10 +97,9 @@ class _MainScreenState extends State<MainScreen> {
                     child: Text(
                       'What Movies',
                       style: TextStyle(
-                        fontFamily: 'Lato', 
-                        color: Colors.white,
-                        fontSize: 16.0
-                      ),
+                          fontFamily: 'Lato',
+                          color: Colors.white,
+                          fontSize: 16.0),
                     ),
                   ),
                 ],
@@ -85,10 +110,7 @@ class _MainScreenState extends State<MainScreen> {
               leading: Icon(Icons.history, color: Colors.black),
               title: Text(
                 'Recently view',
-                style: TextStyle(
-                  fontFamily: 'Lato',
-                  color: Colors.black
-                ),
+                style: TextStyle(fontFamily: 'Lato', color: Colors.black),
               ),
             ),
             ListTile(
@@ -96,10 +118,7 @@ class _MainScreenState extends State<MainScreen> {
               leading: Icon(Icons.bookmark, color: Colors.black),
               title: Text(
                 'Bookmark',
-                style: TextStyle(
-                  fontFamily: 'Lato',
-                  color: Colors.black
-                ),
+                style: TextStyle(fontFamily: 'Lato', color: Colors.black),
               ),
             )
           ],
@@ -151,7 +170,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   _openDrawer() {
-
     _scaffoldKey.currentState.openDrawer();
   }
 
@@ -172,6 +190,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     _menuBloc.dispose();
+    _trendingsBloc.dispose();
     super.dispose();
   }
 }

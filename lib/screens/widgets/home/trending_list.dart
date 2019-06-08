@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:whats_movies/blocs/fetch_trendings/bloc.dart';
 import 'package:whats_movies/domains/movie.dart';
 
 class TrendingList extends StatefulWidget {
@@ -8,43 +11,64 @@ class TrendingList extends StatefulWidget {
 }
 
 class _TrendingListState extends State<TrendingList> {
+  FetchtrendingsBloc _trendingsBloc;
 
-  List<Movie> _sampleData = [
-    Movie(
-      title: 'Captain Marvel',
-      backdropPath: 'assets/images/captain_marvel.jpg'
-    ),
-    Movie(
-      title: 'Captive State',
-      backdropPath: 'assets/images/captive_state.jpg'
-    ),
-    Movie(
-      title: 'Game of Thrones',
-      backdropPath: 'assets/images/got.jpg'
-    ),
-    Movie(
-      title: 'Aladdin',
-      backdropPath: 'assets/images/aladin.jpg'
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+
+    _trendingsBloc = BlocProvider.of<FetchtrendingsBloc>(context);
+    _trendingsBloc.dispatch(FetchTrendings());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 175.0,
-      child: ListView.builder(
-        itemCount: 4,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (_, index) {
+      child: BlocBuilder(
+        bloc: _trendingsBloc,
+        builder: (BuildContext context, FetchtrendingsState state) {
+          if (state is TrendingsUnitilized) {
 
-          return _buildTrendingItem(_sampleData[index]);
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (state is TrendingsLoaded) {
+            return ListView.builder(
+              itemCount: state.trendings.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (_, index) {
+                return _buildTrendingItem(state.trendings[index]);
+              },
+            );
+          }
+
+          if (state is TrendingsError) {
+
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () => _trendingsBloc.dispatch(FetchTrendings()),
+                    icon: Icon(Icons.refresh, size: 35.0)
+                  ),
+                  Text(
+                    'Reload Trendings',
+                    style: TextStyle(
+                      fontFamily: 'Lato'
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
         },
       ),
     );
   }
 
   Widget _buildTrendingItem(Movie movie) {
-
     return Container(
       width: 255.0,
       child: Card(
@@ -52,13 +76,11 @@ class _TrendingListState extends State<TrendingList> {
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         margin: EdgeInsets.all(5.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0)
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         child: Stack(
           children: <Widget>[
-            Image.asset(
-              movie.backdropPath,
+            CachedNetworkImage(
+              imageUrl: movie.backdropUrl,
               height: double.infinity,
               fit: BoxFit.cover,
             ),
@@ -69,17 +91,15 @@ class _TrendingListState extends State<TrendingList> {
                 child: Text(
                   movie.title,
                   style: TextStyle(
-                    fontFamily: 'Lato-Bold',
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                        color: Colors.black,
-                        blurRadius: 2.0,
-                        offset: Offset(2.0, 2.0)
-                      )
-                    ]
-                  ),
+                      fontFamily: 'Lato-Bold',
+                      fontSize: 16.0,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                            color: Colors.black,
+                            blurRadius: 2.0,
+                            offset: Offset(2.0, 2.0))
+                      ]),
                 ),
               ),
             )

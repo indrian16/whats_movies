@@ -1,8 +1,9 @@
 class Movie {
 
   final String title;
-  final String backdropPath;
+  final String posterUrl;
+  final String backdropUrl;
   final double voteAverage;
 
-  Movie({this.title, this.backdropPath, this.voteAverage});
+  Movie({this.title, this.posterUrl, this.backdropUrl, this.voteAverage});
 }
