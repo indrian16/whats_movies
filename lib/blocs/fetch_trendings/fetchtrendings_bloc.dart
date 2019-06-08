@@ -23,7 +23,7 @@ class FetchtrendingsBloc extends Bloc<FetchtrendingsEvent, FetchtrendingsState> 
 
       try {
         
-        var data = await _repository.fetchMovieTredings();
+        var data = await _repository.fetchTredingMovies();
         yield TrendingsLoaded(data);
       } catch (e) {
 

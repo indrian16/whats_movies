@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  PopularList(),
+                  UpcomingList(),
                   SizedBox(height: 16.0)
                 ],
               ),

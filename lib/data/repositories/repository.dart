@@ -12,5 +12,9 @@ class Repository {
     @required MovieApi movieApi
   }): _movieApi = movieApi;
 
-  Future<List<Movie>> fetchMovieTredings() => _movieApi.fetchMovieTrendings();
+  Future<List<Movie>> fetchTredingMovies() => _movieApi.fetchTrendingMovies();
+
+  Future<List<Movie>> fetchPopularMovies() => _movieApi.fetchPopularMovies();
+
+  Future<List<Movie>> fetchUpcomingMovies() => _movieApi.fetchUpcomingMovies();
 }

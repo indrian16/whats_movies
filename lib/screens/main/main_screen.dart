@@ -2,6 +2,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whats_movies/blocs/upcoming_movies/bloc.dart' as prefix0;
+import 'package:whats_movies/blocs/upcoming_movies/upcomingmovies_bloc.dart';
 
 import 'package:whats_movies/data/api/movie_api.dart';
 import 'package:whats_movies/data/mapper/movie_mapper.dart';
@@ -9,6 +11,8 @@ import 'package:whats_movies/data/repositories/repository.dart';
 import 'package:whats_movies/blocs/menu/bloc.dart';
 import 'package:whats_movies/blocs/menu/menu_bloc.dart';
 import 'package:whats_movies/blocs/fetch_trendings/bloc.dart';
+import 'package:whats_movies/blocs/popular_movies/bloc.dart';
+import 'package:whats_movies/blocs/upcoming_movies/bloc.dart';
 
 import 'package:whats_movies/screens/screens.dart';
 
@@ -26,6 +30,8 @@ class _MainScreenState extends State<MainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   MenuBloc _menuBloc;
   FetchtrendingsBloc _trendingsBloc;
+  PopularMoviesBloc _popularMoviesBloc;
+  UpcomingMoviesBloc _upcomingMoviesBloc;
 
   @override
   void initState() {
@@ -36,13 +42,17 @@ class _MainScreenState extends State<MainScreen> {
 
     _menuBloc = MenuBloc();
     _trendingsBloc = FetchtrendingsBloc(repository: _repository);
+    _popularMoviesBloc = PopularMoviesBloc(repository: _repository);
+    _upcomingMoviesBloc = UpcomingMoviesBloc(repository: _repository);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProviderTree(
       blocProviders: [
-        BlocProvider<FetchtrendingsBloc>(bloc: _trendingsBloc)
+        BlocProvider<FetchtrendingsBloc>(bloc: _trendingsBloc),
+        BlocProvider<PopularMoviesBloc>(bloc: _popularMoviesBloc),
+        BlocProvider<UpcomingMoviesBloc>(bloc: _upcomingMoviesBloc)
       ],
       child: BlocBuilder(
         bloc: _menuBloc,
@@ -191,6 +201,8 @@ class _MainScreenState extends State<MainScreen> {
   void dispose() {
     _menuBloc.dispose();
     _trendingsBloc.dispose();
+    _popularMoviesBloc.dispose();
+    _upcomingMoviesBloc.dispose();
     super.dispose();
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
+import 'package:whats_movies/blocs/popular_movies/bloc.dart';
 import 'package:whats_movies/domains/movie.dart';
 
 class PopularList extends StatefulWidget {
@@ -8,102 +11,127 @@ class PopularList extends StatefulWidget {
 }
 
 class _PopularListState extends State<PopularList> {
-  List<Movie> _sampleData = [
-    Movie(
-        title: 'Captain Marvel',
-        backdropUrl: 'assets/images/p_captain_marvel.jpg',
-        voteAverage: 7.1),
-    Movie(
-        title: 'Captive State',
-        backdropUrl: 'assets/images/p_captive_state.jpg',
-        voteAverage: 4.8),
-    Movie(
-        title: 'Game of Thrones',
-        backdropUrl: 'assets/images/p_got.jpg',
-        voteAverage: 8.1),
-    Movie(
-        title: 'Aladdin',
-        backdropUrl: 'assets/images/p_aladdin.jpg',
-        voteAverage: 7.2),
-  ];
+  PopularMoviesBloc _popularMoviesBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _popularMoviesBloc = BlocProvider.of<PopularMoviesBloc>(context);
+    _popularMoviesBloc.dispatch(FetchPopularMovies());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.0,
-      child: ListView.builder(
-        itemCount: 4,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (_, index) {
-          return _buildPopularItem(_sampleData[index]);
+      height: 220.0,
+      child: BlocBuilder(
+        bloc: _popularMoviesBloc,
+        builder: (_, PopularMoviesState state) {
+          if (state is PopularUnitializedState) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (state is PopularLoadedState) {
+            return ListView.builder(
+              itemCount: state.movies.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (_, index) {
+                return _buildPopularItem(state.movies[index]);
+              },
+            );
+          }
+
+          if (state is PopularErrorState) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                      onPressed: () =>
+                          _popularMoviesBloc.dispatch(FetchPopularMovies()),
+                      icon: Icon(Icons.refresh, size: 35.0)),
+                  Text(
+                    'Reload Trendings',
+                    style: TextStyle(fontFamily: 'Lato'),
+                  )
+                ],
+              ),
+            );
+          }
         },
       ),
     );
   }
 
   Widget _buildPopularItem(Movie movie) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Container(
-          width: 135.0,
-          height: 180.0,
-          child: Card(
-            elevation: 3.0,
+    return Container(
+      width: 130.0,
+      child: Column(
+        children: <Widget>[
+          Card(
+            elevation: 6.0,
             semanticContainer: true,
             clipBehavior: Clip.antiAliasWithSaveLayer,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            child: Stack(
-              children: <Widget>[
-                Image.asset(
-                  movie.backdropUrl,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
-                ),
-                Positioned(
-                  right: 1.0,
-                  top: 3.0,
-                  child: Container(
-                    width: 40.0,
-                    child: Row(
-                      children: <Widget>[
-                        Stack(
-                          children: <Widget>[
-                            Positioned(
-                                left: 1.0,
-                                top: 2.0,
-                                child: Icon(Icons.star,
-                                    color: Colors.black38, size: 15.0)),
-                            Icon(Icons.star, color: Colors.white, size: 15.0),
-                          ],
-                        ),
-                        Text(
-                          '${movie.voteAverage}',
-                          style: TextStyle(
-                              fontFamily: 'Lato',
-                              fontSize: 12.0,
-                              color: Colors.white,
-                              shadows: [
-                                Shadow(
-                                    color: Colors.black,
-                                    blurRadius: 2.0,
-                                    offset: Offset(2.0, 2.0))
-                              ]),
-                        )
-                      ],
-                    ),
+            child: Container(
+              width: 120.0,
+              height: 170.0,
+              child: Stack(
+                children: <Widget>[
+                  CachedNetworkImage(
+                    imageUrl: movie.posterUrl,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
-                )
-              ],
+                  Positioned(
+                    right: 1.0,
+                    top: 3.0,
+                    child: Container(
+                      width: 40.0,
+                      child: Row(
+                        children: <Widget>[
+                          Stack(
+                            children: <Widget>[
+                              Positioned(
+                                  left: 1.0,
+                                  top: 2.0,
+                                  child: Icon(Icons.star,
+                                      color: Colors.black38, size: 15.0)),
+                              Icon(Icons.star, color: Colors.white, size: 15.0),
+                            ],
+                          ),
+                          Text(
+                            '${movie.voteAverage}',
+                            style: TextStyle(
+                                fontFamily: 'Lato',
+                                fontSize: 12.0,
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                      color: Colors.black,
+                                      blurRadius: 2.0,
+                                      offset: Offset(2.0, 2.0))
+                                ]),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Text(
-          movie.title,
-          style: TextStyle(fontFamily: 'Lato'),
-        )
-      ],
+          SizedBox(height: 4.0),
+          Text(
+            movie.title,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontFamily: 'Lato'),
+          )
+        ],
+      ),
     );
   }
 }
