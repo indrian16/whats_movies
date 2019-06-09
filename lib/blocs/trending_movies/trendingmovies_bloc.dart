@@ -24,6 +24,7 @@ class TrendingMoviesBloc extends Bloc<TrendingMoviesEvent, TrendingMoviesState> 
     
     if (event is FetchTrendingMovies) {
 
+      yield TrendingUnitilizedState();
       try {
         
         var movies = await _repository.fetchTredingMovies();

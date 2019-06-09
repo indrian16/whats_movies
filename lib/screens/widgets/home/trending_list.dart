@@ -56,7 +56,7 @@ class _TrendingListState extends State<TrendingList> {
                           _trendingMoviesBloc.dispatch(FetchTrendingMovies()),
                       icon: Icon(Icons.refresh, size: 35.0)),
                   Text(
-                    'Reload Trendings',
+                    'Reload Trending movies',
                     style: TextStyle(fontFamily: 'Lato'),
                   )
                 ],

@@ -48,11 +48,13 @@ class _PopularListState extends State<PopularList> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   IconButton(
-                      onPressed: () =>
-                          _popularMoviesBloc.dispatch(FetchPopularMovies()),
-                      icon: Icon(Icons.refresh, size: 35.0)),
+                    onPressed: () =>
+                        _popularMoviesBloc.dispatch(FetchPopularMovies()),
+                    icon: Icon(Icons.refresh, size: 35.0),
+                    splashColor: Colors.black,
+                  ),
                   Text(
-                    'Reload Trendings',
+                    'Reload popular movies',
                     style: TextStyle(fontFamily: 'Lato'),
                   )
                 ],

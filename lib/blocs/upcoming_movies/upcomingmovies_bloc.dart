@@ -24,6 +24,7 @@ class UpcomingMoviesBloc extends Bloc<UpcomingMoviesEvent, UpcomingMoviesState> 
     
     if (event is FetchUpcomingMovies) {
 
+      yield UpcomingUnitializedState();
       try {
         
         final movies = await _repository.fetchUpcomingMovies();

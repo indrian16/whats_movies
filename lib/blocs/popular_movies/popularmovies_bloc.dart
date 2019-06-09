@@ -24,6 +24,7 @@ class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
     
     if (event is FetchPopularMovies) {
 
+      yield PopularUnitializedState();
       try {
         
         final movies = await _repository.fetchPopularMovies();

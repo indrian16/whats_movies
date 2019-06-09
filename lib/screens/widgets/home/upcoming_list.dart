@@ -51,7 +51,7 @@ class _UpcomingListState extends State<UpcomingList> {
                           _upcomingMoviesBloc.dispatch(FetchUpcomingMovies()),
                       icon: Icon(Icons.refresh, size: 35.0)),
                   Text(
-                    'Reload Trendings',
+                    'Reload Upcoming movies',
                     style: TextStyle(fontFamily: 'Lato'),
                   )
                 ],
