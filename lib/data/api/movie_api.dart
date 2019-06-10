@@ -3,7 +3,7 @@ import 'dart:convert' as convert;
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:whats_movies/data/models/models.dart';
+import 'package:whats_movies/data/models/movie_list.dart';
 import 'package:whats_movies/domains/movie.dart';
 import 'package:whats_movies/data/mapper/movie_mapper.dart';
 
