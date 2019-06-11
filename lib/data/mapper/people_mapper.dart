@@ -14,7 +14,7 @@ class PeopleMapper implements EntityMapper<Result, People> {
 
     return People(
       name: entity.name,
-      profileUrl: 'https://image.tmdb.org/t/p/w500/w185'+entity.profilePath,
+      profileUrl: 'https://image.tmdb.org/t/p/w185'+entity.profilePath,
       films: _shortTitleOrName(entity.knownFor)
     );
   }

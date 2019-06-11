@@ -75,10 +75,10 @@ class _PopularListState extends State<PopularList> {
             elevation: 6.0,
             semanticContainer: true,
             clipBehavior: Clip.antiAliasWithSaveLayer,
+            margin: EdgeInsets.all(4.0),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             child: Container(
-              width: 120.0,
               height: 170.0,
               child: Stack(
                 children: <Widget>[
