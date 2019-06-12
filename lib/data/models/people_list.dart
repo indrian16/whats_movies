@@ -50,12 +50,12 @@ class Result {
     });
 
     factory Result.fromJson(Map<String, dynamic> json) => new Result(
-        popularity: json["popularity"].toDouble(),
-        id: json["id"],
-        profilePath: json["profile_path"],
-        name: json["name"],
-        knownFor: new List<KnownFor>.from(json["known_for"].map((x) => KnownFor.fromJson(x))),
-        adult: json["adult"],
+        popularity: json["popularity"].toDouble() ?? 0.0,
+        id: json["id"] ?? null,
+        profilePath: json["profile_path"] ?? '',
+        name: json["name"] ?? '',
+        knownFor: new List<KnownFor>.from(json["known_for"].map((x) => KnownFor.fromJson(x))) ?? [],
+        adult: json["adult"] ?? false,
     );
 
     Map<String, dynamic> toJson() => {

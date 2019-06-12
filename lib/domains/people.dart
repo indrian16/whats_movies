@@ -1,13 +1,14 @@
-class People {
+import 'package:equatable/equatable.dart';
+
+class People extends Equatable {
   final String name;
   final String profileUrl;
   final List<String> films;
 
+  String get filmsToString => films.join(', ');
+
   People({this.name, this.profileUrl, this.films});
 
-  String filmToString() {
-    String str = '';
-    films.forEach((title) => str+='$title, ');
-    return str;
-  }
+  @override
+  String toString() => 'Peoples { Name: $name, Films: $filmsToString }';
 }
