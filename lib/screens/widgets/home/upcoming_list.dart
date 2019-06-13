@@ -6,18 +6,24 @@ import 'package:whats_movies/blocs/upcoming_movies/bloc.dart';
 import 'package:whats_movies/domains/movie.dart';
 
 class UpcomingList extends StatefulWidget {
+
+  final UpcomingMoviesBloc upcomingMoviesBloc;
+
+  const UpcomingList({Key key, this.upcomingMoviesBloc}) : super(key: key);
+
   @override
   _UpcomingListState createState() => _UpcomingListState();
 }
 
 class _UpcomingListState extends State<UpcomingList> {
+
   UpcomingMoviesBloc _upcomingMoviesBloc;
 
   @override
   void initState() {
     super.initState();
-    _upcomingMoviesBloc = BlocProvider.of<UpcomingMoviesBloc>(context);
-    _upcomingMoviesBloc.dispatch(FetchUpcomingMovies());
+    
+    _upcomingMoviesBloc = widget.upcomingMoviesBloc;
   }
 
   @override

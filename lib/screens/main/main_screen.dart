@@ -13,7 +13,6 @@ import 'package:whats_movies/blocs/menu/menu_bloc.dart';
 import 'package:whats_movies/blocs/trending_movies/bloc.dart';
 import 'package:whats_movies/blocs/popular_movies/bloc.dart';
 import 'package:whats_movies/blocs/upcoming_movies/bloc.dart';
-import 'package:whats_movies/blocs/upcoming_movies/bloc.dart';
 
 import 'package:whats_movies/screens/screens.dart';
 
@@ -78,6 +77,10 @@ class _MainScreenState extends State<MainScreen> {
                 IconButton(
                   onPressed: () {},
                   icon: Icon(Icons.search),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.more_vert),
                 )
               ],
               title: Text(

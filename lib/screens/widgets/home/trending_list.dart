@@ -6,19 +6,23 @@ import 'package:whats_movies/blocs/trending_movies/bloc.dart';
 import 'package:whats_movies/domains/movie.dart';
 
 class TrendingList extends StatefulWidget {
+
+  final TrendingMoviesBloc trendingMoviesBloc;
+
+  const TrendingList({Key key, this.trendingMoviesBloc}) : super(key: key);
   @override
   _TrendingListState createState() => _TrendingListState();
 }
 
 class _TrendingListState extends State<TrendingList> {
+  
   TrendingMoviesBloc _trendingMoviesBloc;
 
   @override
   void initState() {
     super.initState();
 
-    _trendingMoviesBloc = BlocProvider.of<TrendingMoviesBloc>(context);
-    _trendingMoviesBloc.dispatch(FetchTrendingMovies());
+    _trendingMoviesBloc = widget.trendingMoviesBloc;
   }
 
   @override

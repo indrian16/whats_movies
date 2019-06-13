@@ -6,19 +6,24 @@ import 'package:whats_movies/blocs/popular_movies/bloc.dart';
 import 'package:whats_movies/domains/movie.dart';
 
 class PopularList extends StatefulWidget {
+
+  final PopularMoviesBloc popularMoviesBloc;
+
+  const PopularList({Key key, this.popularMoviesBloc}) : super(key: key);
+
   @override
   _PopularListState createState() => _PopularListState();
 }
 
 class _PopularListState extends State<PopularList> {
+
   PopularMoviesBloc _popularMoviesBloc;
 
   @override
   void initState() {
     super.initState();
 
-    _popularMoviesBloc = BlocProvider.of<PopularMoviesBloc>(context);
-    _popularMoviesBloc.dispatch(FetchPopularMovies());
+    _popularMoviesBloc = widget.popularMoviesBloc;
   }
 
   @override

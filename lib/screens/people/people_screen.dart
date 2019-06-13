@@ -62,7 +62,6 @@ class _PeopleScreenState extends State<PeopleScreen> {
     return Container(
       height: 70.0,
       padding: EdgeInsets.all(6.0),
-      color: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

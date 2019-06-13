@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import 'bloc_delegate.dart';
+import 'package:whats_movies/blocs/bloc_delegate.dart';
 import 'screens/screens.dart';
 
 void main() {
