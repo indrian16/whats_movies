@@ -190,11 +190,11 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  _openDrawer() {
+  void _openDrawer() {
     _scaffoldKey.currentState.openDrawer();
   }
 
-  _onTapBottomNav(int index) {
+  void _onTapBottomNav(int index) {
     if (index == 0) {
       _menuBloc.dispatch(SelectHome());
     }

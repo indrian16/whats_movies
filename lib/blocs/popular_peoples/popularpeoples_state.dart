@@ -17,25 +17,24 @@ class LoadedPopularPeoplesState extends PopularPeoplesState {
   final List<People> peoples;
   final int page;
   final bool hasReachedMax;
+  final bool occuredError;
 
-  LoadedPopularPeoplesState({this.peoples, this.page, this.hasReachedMax})
-      : super([peoples, page, hasReachedMax]);
+  LoadedPopularPeoplesState(
+      {this.peoples, this.page, this.hasReachedMax, this.occuredError})
+      : super([peoples, page, hasReachedMax, occuredError]);
 
-  LoadedPopularPeoplesState copyWitn({
-    List<People> peoples,
-    int page,
-    bool hasReachedMax
-  }) {
-
+  LoadedPopularPeoplesState copyWith(
+      {List<People> peoples, int page, bool hasReachedMax, bool occuredError}) {
     return LoadedPopularPeoplesState(
-      peoples: peoples ?? this.peoples,
-      page: page ?? this.page,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax
-    );
+        peoples: peoples ?? this.peoples,
+        page: page ?? this.page,
+        hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+        occuredError: occuredError ?? this.occuredError);
   }
 
   @override
-  String toString() => 'LoadedPopularPeoplesState { peoples: ${peoples.length} page: $page, hasReachedMax: $hasReachedMax }';
+  String toString() =>
+      'LoadedPopularPeoplesState { peoples: ${peoples.length} page: $page, hasReachedMax: $hasReachedMax, occuredError: $occuredError }';
 }
 
 class ErrorPopularPeoplesState extends PopularPeoplesState {

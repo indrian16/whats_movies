@@ -43,7 +43,9 @@ class _PeopleScreenState extends State<PeopleScreen> {
                             : state.peoples.length + 1,
                 itemBuilder: (_, index) {
                   return index >= state.peoples.length
-                          ? _buildBottomItem()
+                          ? state.occuredError
+                            ? _buildContinuePage(state.page)
+                            : _buildBottomLoading()
                           : _buildPeopleItem(state.peoples[index]);
                 },
               ));
@@ -57,7 +59,34 @@ class _PeopleScreenState extends State<PeopleScreen> {
     );
   }
 
-  Widget _buildBottomItem() {
+  Widget _buildContinuePage(int page) {
+
+    return Container(
+      height: 80.0,
+      padding: EdgeInsets.all(6.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            'Occured error at page: $page',
+            style: TextStyle(
+              fontFamily: 'Lato',
+              fontSize: 16
+            ),
+          ),
+          FlatButton.icon(
+            label: Text(
+              'Try again'
+            ),
+            onPressed: () => _popularPeoplesBloc.dispatch(FetchPeoples()),
+            icon: Icon(Icons.refresh)
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomLoading() {
 
     return Container(
       height: 70.0,
