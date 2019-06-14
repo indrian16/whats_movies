@@ -34,7 +34,7 @@ class PopularPeoplesBloc
 
     if (event is FetchPeoples && !_hashReachedMax(currentState)) {
 
-      if (currentState is InitialPopularPeoplesState) {
+      if (currentState is InitialPopularPeoplesState || currentState is ErrorPopularPeoplesState) {
         try {
           final peoples = await _repository.fetchPopularPeoples(page: 1);
           yield LoadedPopularPeoplesState(
@@ -57,6 +57,7 @@ class PopularPeoplesBloc
   }
 
   Stream<PopularPeoplesState> _loadedPopularPeoplesToState() async* {
+    yield (currentState as LoadedPopularPeoplesState).copyWith(occuredError: false);
     try {
       int nextPage = ((currentState as LoadedPopularPeoplesState).page) + 1;
       final peoples = await _repository.fetchPopularPeoples(page: nextPage);
