@@ -15,6 +15,7 @@ class MovieMapper implements EntityMapper<Result, Movie> {
   Movie mapFromEntity(Result entity) {
 
     return Movie(
+      id: entity.id,
       title: entity.title,
       posterUrl: 'https://image.tmdb.org/t/p/w342'+entity.posterPath,
       backdropUrl: 'https://image.tmdb.org/t/p/w780'+entity.backdropPath,
