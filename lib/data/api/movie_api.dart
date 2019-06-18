@@ -5,25 +5,33 @@ import 'package:http/http.dart' as http;
 
 import 'package:whats_movies/data/models/movie_list.dart';
 import 'package:whats_movies/data/models/people_list.dart';
+import 'package:whats_movies/data/models/movie_detail_model.dart';
+
 import 'package:whats_movies/domains/movie.dart';
 import 'package:whats_movies/domains/people.dart';
+import 'package:whats_movies/domains/movie_detail.dart';
+
 import 'package:whats_movies/data/mapper/movie_mapper.dart';
 import 'package:whats_movies/data/mapper/people_mapper.dart';
+import 'package:whats_movies/data/mapper/movie_detail_mapper.dart';
 
 class MovieApi {
 
   final http.Client _client;
   final MovieMapper _movieMapper;
   final PeopleMapper _peopleMapper;
+  final MovieDetailMapper _movieDetailMapper;
   final _apiKey = '955a6533e19558c1c73858d0f2d7fb07';
 
   MovieApi({
     @required http.Client client,
     @required MovieMapper movieMapper,
-    @required PeopleMapper peopleMapper
+    @required PeopleMapper peopleMapper,
+    @required MovieDetailMapper movieDetailMapper
   }): _client = client,
       _movieMapper = movieMapper,
-      _peopleMapper = peopleMapper;
+      _peopleMapper = peopleMapper,
+      _movieDetailMapper = movieDetailMapper;
 
   Future<List<Movie>> fetchTrendingMovies() async {
 
@@ -32,7 +40,7 @@ class MovieApi {
     if (response.statusCode == 200) {
 
       print('[GET]fetchMovieTrendings: '+response.body);
-      var result = MovieList.fromJson(convert.jsonDecode(response.body));
+      final result = MovieList.fromJson(convert.jsonDecode(response.body));
       return result.results.map(_movieMapper.mapFromEntity).toList();
     } else {
 
@@ -47,7 +55,7 @@ class MovieApi {
     if (response.statusCode == 200) {
 
       print('[GET]fetchPopularMovies: '+response.body);
-      var result = MovieList.fromJson(convert.jsonDecode(response.body));
+      final result = MovieList.fromJson(convert.jsonDecode(response.body));
       return result.results.map(_movieMapper.mapFromEntity).toList();
     } else {
 
@@ -62,7 +70,7 @@ class MovieApi {
     if (response.statusCode == 200) {
 
       print('[GET]fetchUpcomingMovies: '+response.body);
-      var result = MovieList.fromJson(convert.jsonDecode(response.body));
+      final result = MovieList.fromJson(convert.jsonDecode(response.body));
       return result.results.map(_movieMapper.mapFromEntity).toList();
     } else {
 
@@ -77,11 +85,26 @@ class MovieApi {
     if (response.statusCode == 200) {
 
       print('[GET]fetchUpcomingMovies: '+response.body);
-      var result = PeopleList.fromJson(convert.jsonDecode(response.body));
+      final result = PeopleList.fromJson(convert.jsonDecode(response.body));
       return result.results.map(_peopleMapper.mapFromEntity).toList();
     } else {
 
       throw Exception('[ERROR] Failed fetch popular peoples page: $page');
+    }
+  }
+
+  Future<MovieDetail> fetchMovieDetail(int id) async {
+
+    final response = await _client.get('https://api.themoviedb.org/3/movie/$id?api_key=$_apiKey&language=en-US');
+
+    if (response.statusCode == 200) {
+
+      print('[GET]fetchMovieDetail: '+response.body);
+      final result = MovieDetailModel.fromJson(convert.json.decode(response.body));
+      return _movieDetailMapper.mapFromEntity(result);
+    } else {
+
+      throw Exception('[ERROR] Failed fetch movie detail by id: $id');
     }
   }
 }

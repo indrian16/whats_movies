@@ -7,6 +7,7 @@ import 'package:whats_movies/blocs/popular_peoples/bloc.dart';
 import 'package:whats_movies/data/api/movie_api.dart';
 import 'package:whats_movies/data/mapper/movie_mapper.dart';
 import 'package:whats_movies/data/mapper/people_mapper.dart';
+import 'package:whats_movies/data/mapper/movie_detail_mapper.dart';
 import 'package:whats_movies/data/repositories/repository.dart';
 import 'package:whats_movies/blocs/menu/bloc.dart';
 import 'package:whats_movies/blocs/menu/menu_bloc.dart';
@@ -22,9 +23,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+
   final _client = http.Client();
   final _movieMapper = MovieMapper();
   final _peopleMapper = PeopleMapper();
+  final _movieDetailMapper = MovieDetailMapper();
   MovieApi _movieApi;
   Repository _repository;
 
@@ -40,9 +43,11 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
 
     _movieApi = MovieApi(
-        client: _client,
-        movieMapper: _movieMapper,
-        peopleMapper: _peopleMapper);
+      client: _client,
+      movieMapper: _movieMapper,
+      peopleMapper: _peopleMapper,
+      movieDetailMapper: _movieDetailMapper
+    );
     _repository = Repository(movieApi: _movieApi);
 
     _menuBloc = MenuBloc();

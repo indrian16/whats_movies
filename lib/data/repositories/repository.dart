@@ -1,9 +1,7 @@
 import 'package:meta/meta.dart';
-import 'dart:async';
 
 import 'package:whats_movies/data/api/movie_api.dart';
-import 'package:whats_movies/domains/movie.dart';
-import 'package:whats_movies/domains/people.dart';
+import 'package:whats_movies/domains/domains.dart';
 
 class Repository {
 
@@ -20,4 +18,6 @@ class Repository {
   Future<List<Movie>> fetchUpcomingMovies() => _movieApi.fetchUpcomingMovies();
 
   Future<List<People>> fetchPopularPeoples({int page}) => _movieApi.fetchPopularPeoples(page);
+
+  Future<MovieDetail> fetchMovileDetail({int id}) => _movieApi.fetchMovieDetail(id);
 }
