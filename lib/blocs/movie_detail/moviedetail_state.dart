@@ -4,33 +4,33 @@ import 'package:meta/meta.dart';
 import 'package:whats_movies/domains/movie_detail.dart';
 
 @immutable
-abstract class DetailMovieState extends Equatable {
-  DetailMovieState([List props = const []]) : super(props);
+abstract class MovieDetailState extends Equatable {
+  MovieDetailState([List props = const []]) : super(props);
 }
 
-class InitialDetailMovieState extends DetailMovieState {
+class InitialMovieDetailState extends MovieDetailState {
 
   @override
   String toString() => 'InitialDetailMovieState';
 }
 
-class LoadingDetailMovieState extends DetailMovieState {
+class LoadingMovieDetailState extends MovieDetailState {
 
   @override
   String toString() => 'LoadingDetailMovieState';
 }
 
-class LoadedDetailMovieState extends DetailMovieState {
+class LoadedMovieDetailState extends MovieDetailState {
 
   final MovieDetail detailMovie;
 
-  LoadedDetailMovieState(this.detailMovie);
+  LoadedMovieDetailState(this.detailMovie);
 
   @override
   String toString() => 'LoadedDetailMovieState { title: ${detailMovie.title} }';
 }
 
-class ErrorDetailMovieState extends DetailMovieState {
+class ErrorMovieDetailState extends MovieDetailState {
 
   @override
   String toString() => 'ErrorDetailMovieState';

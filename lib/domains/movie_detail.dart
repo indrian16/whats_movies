@@ -5,7 +5,7 @@ class MovieDetail {
   final String overview;
   final String posterUrl;
   final String backdropUrl;
-  final int voteAverage;
+  final double voteAverage;
 
   MovieDetail({this.id, this.title, this.overview, this.posterUrl, this.backdropUrl, this.voteAverage});
 }

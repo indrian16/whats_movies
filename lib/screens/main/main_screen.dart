@@ -1,19 +1,13 @@
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whats_movies/blocs/popular_peoples/bloc.dart';
+import 'package:kiwi/kiwi.dart' as kiwi;
 
-import 'package:whats_movies/data/api/movie_api.dart';
-import 'package:whats_movies/data/mapper/movie_mapper.dart';
-import 'package:whats_movies/data/mapper/people_mapper.dart';
-import 'package:whats_movies/data/mapper/movie_detail_mapper.dart';
-import 'package:whats_movies/data/repositories/repository.dart';
 import 'package:whats_movies/blocs/menu/bloc.dart';
-import 'package:whats_movies/blocs/menu/menu_bloc.dart';
 import 'package:whats_movies/blocs/trending_movies/bloc.dart';
 import 'package:whats_movies/blocs/popular_movies/bloc.dart';
 import 'package:whats_movies/blocs/upcoming_movies/bloc.dart';
+import 'package:whats_movies/blocs/popular_peoples/bloc.dart';
 
 import 'package:whats_movies/screens/screens.dart';
 
@@ -24,38 +18,13 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
-  final _client = http.Client();
-  final _movieMapper = MovieMapper();
-  final _peopleMapper = PeopleMapper();
-  final _movieDetailMapper = MovieDetailMapper();
-  MovieApi _movieApi;
-  Repository _repository;
-
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  MenuBloc _menuBloc;
-  TrendingMoviesBloc _trendingMoviesBloc;
-  PopularMoviesBloc _popularMoviesBloc;
-  UpcomingMoviesBloc _upcomingMoviesBloc;
-  PopularPeoplesBloc _popularPeoplesBloc;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _movieApi = MovieApi(
-      client: _client,
-      movieMapper: _movieMapper,
-      peopleMapper: _peopleMapper,
-      movieDetailMapper: _movieDetailMapper
-    );
-    _repository = Repository(movieApi: _movieApi);
-
-    _menuBloc = MenuBloc();
-    _trendingMoviesBloc = TrendingMoviesBloc(repository: _repository);
-    _popularMoviesBloc = PopularMoviesBloc(repository: _repository);
-    _upcomingMoviesBloc = UpcomingMoviesBloc(repository: _repository);
-    _popularPeoplesBloc = PopularPeoplesBloc(repository: _repository);
-  }
+  final _menuBloc = kiwi.Container().resolve<MenuBloc>();
+  final _trendingMoviesBloc = kiwi.Container().resolve<TrendingMoviesBloc>();
+  final _popularMoviesBloc = kiwi.Container().resolve<PopularMoviesBloc>();
+  final _upcomingMoviesBloc = kiwi.Container().resolve<UpcomingMoviesBloc>();
+  final _popularPeoplesBloc = kiwi.Container().resolve<PopularPeoplesBloc>();
 
   @override
   Widget build(BuildContext context) {

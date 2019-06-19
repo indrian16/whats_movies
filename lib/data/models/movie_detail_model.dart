@@ -28,7 +28,7 @@ class MovieDetailModel {
     String tagline;
     String title;
     bool video;
-    int voteAverage;
+    double voteAverage;
     int voteCount;
 
     MovieDetailModel({

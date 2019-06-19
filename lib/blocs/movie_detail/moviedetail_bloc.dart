@@ -5,36 +5,37 @@ import './bloc.dart';
 
 import 'package:whats_movies/data/repositories/repository.dart';
 
-class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
+class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
 
-  Repository _repository;
+  final Repository _repository;
 
-  DetailMovieBloc({
+  MovieDetailBloc({
     @required Repository repository
   }): assert(repository != null),
       _repository = repository;
 
   @override
-  DetailMovieState get initialState => InitialDetailMovieState();
+  MovieDetailState get initialState => InitialMovieDetailState();
 
   @override
-  Stream<DetailMovieState> mapEventToState(
-    DetailMovieEvent event,
+  Stream<MovieDetailState> mapEventToState(
+    MovieDetailEvent event,
   ) async* {
     
-    if (event is FetchDetailMovie) {
+    if (event is FetchMovieDetail) {
 
-      yield LoadingDetailMovieState();
+      yield LoadingMovieDetailState();
       try {
         
         final movieDetail = await _repository.fetchMovileDetail(id: event.id);
-        yield LoadedDetailMovieState(movieDetail);
+        yield LoadedMovieDetailState(movieDetail);
 
       } catch (e) {
 
         print(e);
-        yield ErrorDetailMovieState();
+        yield ErrorMovieDetailState();
       }
     }
   }
+
 }
