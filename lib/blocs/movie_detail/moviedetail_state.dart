@@ -22,12 +22,12 @@ class LoadingMovieDetailState extends MovieDetailState {
 
 class LoadedMovieDetailState extends MovieDetailState {
 
-  final MovieDetail detailMovie;
+  final MovieDetail movieDetail;
 
-  LoadedMovieDetailState(this.detailMovie);
+  LoadedMovieDetailState(this.movieDetail);
 
   @override
-  String toString() => 'LoadedDetailMovieState { title: ${detailMovie.title} }';
+  String toString() => 'LoadedDetailMovieState { title: ${movieDetail.title} }';
 }
 
 class ErrorMovieDetailState extends MovieDetailState {

@@ -9,7 +9,7 @@ class MovieDetailModel {
     String backdropPath;
     dynamic belongsToCollection;
     int budget;
-    List<Genre> genres;
+    List<GenreModel> genres;
     String homepage;
     int id;
     String imdbId;
@@ -64,7 +64,7 @@ class MovieDetailModel {
         backdropPath: json["backdrop_path"],
         belongsToCollection: json["belongs_to_collection"],
         budget: json["budget"],
-        genres: new List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x))),
+        genres: new List<GenreModel>.from(json["genres"].map((x) => GenreModel.fromJson(x))),
         homepage: json["homepage"],
         id: json["id"],
         imdbId: json["imdb_id"],
@@ -116,16 +116,16 @@ class MovieDetailModel {
     };
 }
 
-class Genre {
+class GenreModel {
     int id;
     String name;
 
-    Genre({
+    GenreModel({
         this.id,
         this.name,
     });
 
-    factory Genre.fromJson(Map<String, dynamic> json) => new Genre(
+    factory GenreModel.fromJson(Map<String, dynamic> json) => new GenreModel(
         id: json["id"],
         name: json["name"],
     );

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:whats_movies/blocs/popular_movies/bloc.dart';
 import 'package:whats_movies/domains/movie.dart';
+import 'package:whats_movies/screens/detail/movie_detail_page.dart';
 
 class PopularList extends StatefulWidget {
 
@@ -42,7 +43,15 @@ class _PopularListState extends State<PopularList> {
               itemCount: state.movies.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index) {
-                return _buildPopularItem(state.movies[index]);
+                return GestureDetector(
+                  onTap: () {
+
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MovieDetailPage(id: state.movies[index].id)
+                    ));
+                  },
+                  child: _buildPopularItem(state.movies[index]),
+                );
               },
             );
           }
