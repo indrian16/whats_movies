@@ -8,6 +8,8 @@ import 'package:whats_movies/blocs/movie_detail/bloc.dart';
 import 'package:whats_movies/domains/movie_detail.dart';
 import 'package:whats_movies/domains/movie_genre.dart';
 
+import 'package:whats_movies/screens/widgets/movie_detail/movie_details.dart';
+
 class MovieDetailPage extends StatefulWidget {
   final int id;
 
@@ -54,24 +56,24 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
   Widget _buildGenreChip(List<Genre> genres) {
     return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: genres.map((g) {
-        return Flexible(
-          flex: 2,
-          child: Padding(
-            padding: EdgeInsets.only(right: 4.0),
-            child: InputChip(
-              onPressed: () {
-                print('clickId: ${g.id}');
-              },
-              label: Text(
-                g.name,
-                style: TextStyle(fontFamily: 'Lato', fontSize: 12.0),
+        mainAxisSize: MainAxisSize.max,
+        children: genres.map((g) {
+          return Flexible(
+            flex: 2,
+            child: Padding(
+              padding: EdgeInsets.only(right: 4.0),
+              child: InputChip(
+                onPressed: () {
+                  print('clickId: ${g.id}');
+                },
+                label: Text(
+                  g.name,
+                  style: TextStyle(fontFamily: 'Lato', fontSize: 12.0),
+                ),
               ),
             ),
-          ),
-        );
-    }).toList());
+          );
+        }).toList());
   }
 
   Widget _loadedState(MovieDetail movieDetail) {
@@ -174,6 +176,59 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                   )
                 ],
               ),
+            ),
+            _buildBody(movieDetail)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody(MovieDetail movieDetail) {
+    return Container(
+      height: 454.0,
+      child: DefaultTabController(
+        length: 3,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 54.0,
+              child: TabBar(
+                tabs: <Widget>[
+                  Tab(
+                    child: Text(
+                      'The Info',
+                      style: TextStyle(fontFamily: 'Lato-Bold'),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      'Cast',
+                      style: TextStyle(fontFamily: 'Lato-Bold'),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      'Comments',
+                      style: TextStyle(fontFamily: 'Lato-Bold'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 400,
+              child: TabBarView(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      MovieOverview(overview: movieDetail.overview)
+                    ],
+                  ),
+                  Center(child: Text('2')),
+                  Center(child: Text('3')),
+                ],
+              )
             )
           ],
         ),
