@@ -15,7 +15,7 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       _repository = repository;
 
   @override
-  MovieDetailState get initialState => InitialMovieDetailState();
+  MovieDetailState get initialState => LoadingMovieDetailState();
 
   @override
   Stream<MovieDetailState> mapEventToState(

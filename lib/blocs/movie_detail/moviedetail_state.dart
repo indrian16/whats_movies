@@ -8,12 +8,6 @@ abstract class MovieDetailState extends Equatable {
   MovieDetailState([List props = const []]) : super(props);
 }
 
-class InitialMovieDetailState extends MovieDetailState {
-
-  @override
-  String toString() => 'InitialDetailMovieState';
-}
-
 class LoadingMovieDetailState extends MovieDetailState {
 
   @override
