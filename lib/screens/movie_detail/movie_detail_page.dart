@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +6,6 @@ import 'package:kiwi/kiwi.dart' as kiwi;
 
 import 'package:whats_movies/blocs/movie_detail/bloc.dart';
 import 'package:whats_movies/domains/movie_detail.dart';
-import 'package:whats_movies/domains/movie_genre.dart';
 
 import 'package:whats_movies/screens/widgets/movie_detail/movie_details.dart';
 
@@ -40,25 +38,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
       _isSrink = false;
     }
   });
-
-  Widget _buildGenreChips(List<Genre> genres) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: genres.length,
-      itemBuilder: (_, index) {
-        return Padding(
-          padding: EdgeInsets.only(right: 4.0),
-          child: InputChip(
-            onPressed: () {
-              print('genreId: ${genres[index].id}');
-            },
-            label: Text(genres[index].name,
-                style: TextStyle(fontFamily: 'Lato', fontSize: 10.0)),
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,12 +156,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                 SizedBox(height: 2.0),
                                 Text(
                                   movieDetail.title,
-                                  maxLines: 1,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontFamily: 'Lato-Bold', fontSize: 16.0),
+                                  style: TextStyle(fontFamily: 'Lato-Bold', fontSize: 18.0),
                                 ),
                                 Flexible(
-                                  child: _buildGenreChips(movieDetail.genres),
+                                  child: GenreChips(genres: movieDetail.genres),
                                 )
                               ],
                             ),
@@ -236,8 +215,50 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          MovieOverview(overview: movieDetail.overview)
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Overview',
+                  style: TextStyle(
+                    fontFamily: 'Lato-Bold',
+                    fontSize: 18.0
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                MovieOverview(overview: movieDetail.overview)
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: HorizontalLine(height: 1.5),
+          ),
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Trailers',
+                  style: TextStyle(
+                    fontFamily: 'Lato-Bold',
+                    fontSize: 18.0
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 8.0),
+          TrailerList(id: movieDetail.id),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: HorizontalLine(height: 1.5),
+          ),
         ],
       ),
     );

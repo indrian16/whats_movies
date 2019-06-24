@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:whats_movies/blocs/trending_movies/bloc.dart';
 import 'package:whats_movies/domains/movie.dart';
-import 'package:whats_movies/screens/detail/movie_detail_page.dart';
+import 'package:whats_movies/screens/movie_detail/movie_detail_page.dart';
 
 class TrendingList extends StatefulWidget {
   final TrendingMoviesBloc trendingMoviesBloc;

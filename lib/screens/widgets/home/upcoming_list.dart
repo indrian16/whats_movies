@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:whats_movies/blocs/upcoming_movies/bloc.dart';
 import 'package:whats_movies/domains/movie.dart';
-import 'package:whats_movies/screens/detail/movie_detail_page.dart';
+import 'package:whats_movies/screens/movie_detail/movie_detail_page.dart';
 
 class UpcomingList extends StatefulWidget {
 

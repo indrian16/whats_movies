@@ -36,7 +36,6 @@ class _MovieOverviewState extends State<MovieOverview> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
       child: secondHalf.isEmpty
               ? Text(firstHalf)
               : Column(

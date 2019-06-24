@@ -20,4 +20,6 @@ class Repository {
   Future<List<People>> fetchPopularPeoples({int page}) => _movieApi.fetchPopularPeoples(page);
 
   Future<MovieDetail> fetchMovileDetail({int id}) => _movieApi.fetchMovieDetail(id);
+
+  Future<List<MDYoutubeTrailer>> fetchMDVideos({int id}) => _movieApi.fetchMDVideos(id);
 }

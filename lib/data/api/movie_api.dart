@@ -6,14 +6,13 @@ import 'package:http/http.dart' as http;
 import 'package:whats_movies/data/models/movie_list.dart';
 import 'package:whats_movies/data/models/people_list.dart';
 import 'package:whats_movies/data/models/movie_detail_model.dart';
+import 'package:whats_movies/data/models/movie_detail_video.dart';
 
-import 'package:whats_movies/domains/movie.dart';
-import 'package:whats_movies/domains/people.dart';
-import 'package:whats_movies/domains/movie_detail.dart';
+import 'package:whats_movies/domains/domains.dart';
 
-import 'package:whats_movies/data/mapper/movie_mapper.dart';
-import 'package:whats_movies/data/mapper/people_mapper.dart';
-import 'package:whats_movies/data/mapper/movie_detail_mapper.dart';
+import 'package:whats_movies/data/mapper/mappers.dart';
+
+import 'package:whats_movies/data/models/movie_detail_enum.dart';
 
 class MovieApi {
 
@@ -21,17 +20,22 @@ class MovieApi {
   final MovieMapper _movieMapper;
   final PeopleMapper _peopleMapper;
   final MovieDetailMapper _movieDetailMapper;
+  final MDVideoMapper _mdVideoMapper;
+
+
   final _apiKey = '955a6533e19558c1c73858d0f2d7fb07';
 
   MovieApi({
     @required http.Client client,
     @required MovieMapper movieMapper,
     @required PeopleMapper peopleMapper,
-    @required MovieDetailMapper movieDetailMapper
+    @required MovieDetailMapper movieDetailMapper,
+    @required MDVideoMapper mdVideoMapper
   }): _client = client,
       _movieMapper = movieMapper,
       _peopleMapper = peopleMapper,
-      _movieDetailMapper = movieDetailMapper;
+      _movieDetailMapper = movieDetailMapper,
+      _mdVideoMapper = mdVideoMapper;
 
   Future<List<Movie>> fetchTrendingMovies() async {
 
@@ -106,5 +110,29 @@ class MovieApi {
 
       throw Exception('[ERROR] Failed fetch movie detail by id: $id');
     }
+  }
+
+  Future<List<MDYoutubeTrailer>> fetchMDVideos(int id) async {
+
+    final response = await _client.get('https://api.themoviedb.org/3/movie/$id/videos?api_key=$_apiKey&language=en-US');
+
+    List<MDYoutubeTrailer> dataSorted = [];
+    if (response.statusCode == 200) {
+
+      print('[GET]fetchMDVideo: '+response.body);
+      final result = MovieDetailVideo.fromJson(convert.json.decode(response.body));
+      result.results.forEach((video) {
+
+        if (video.site == Site.YOU_TUBE && video.type == Type.TRAILER) {
+
+          dataSorted.add(_mdVideoMapper.mapFromEntity(video));
+        }
+      });
+    } else {
+
+      throw Exception('[ERROR] Failed fetch movie detail video by id: $id');
+    }
+
+    return dataSorted;
   }
 }
