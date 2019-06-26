@@ -15,6 +15,7 @@ class MDVideoMapper extends EntityMapper<Result, MDYoutubeTrailer> {
   MDYoutubeTrailer mapFromEntity(Result entity) {
     
     return MDYoutubeTrailer(
+      id: entity.key,
       name: entity.name,
       thumbnailUrl: 'https://img.youtube.com/vi/${entity.key}/0.jpg'
     );

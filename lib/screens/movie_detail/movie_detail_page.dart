@@ -7,12 +7,14 @@ import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:whats_movies/blocs/movie_detail/bloc.dart';
 import 'package:whats_movies/domains/movie_detail.dart';
 
+import 'tabs/info_tab.dart';
 import 'package:whats_movies/screens/widgets/movie_detail/movie_details.dart';
 
 class MovieDetailPage extends StatefulWidget {
   final int id;
 
   const MovieDetailPage({Key key, this.id}) : super(key: key);
+
   @override
   _MovieDetailPageState createState() => _MovieDetailPageState();
 }
@@ -201,65 +203,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
           },
           body: TabBarView(
             children: <Widget>[
-              _buildInfoTabContent(movieDetail),
+              InfoTab(movieDetail: movieDetail),
               Center(child: Text('2')),
               Center(child: Text('3')),
             ],
           )
         ),
-      ),
-    );
-  }
-
-  Widget _buildInfoTabContent(MovieDetail movieDetail) {
-    
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Overview',
-                  style: TextStyle(
-                    fontFamily: 'Lato-Bold',
-                    fontSize: 18.0
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                MovieOverview(overview: movieDetail.overview)
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: HorizontalLine(height: 1.5),
-          ),
-          Container(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Trailers',
-                  style: TextStyle(
-                    fontFamily: 'Lato-Bold',
-                    fontSize: 18.0
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 8.0),
-          TrailerList(id: movieDetail.id),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: HorizontalLine(height: 1.5),
-          ),
-        ],
       ),
     );
   }

@@ -60,7 +60,7 @@ class _TrailerListState extends State<TrailerList> {
 
   Widget _buildTrailerItem(MDYoutubeTrailer trailer) {
     return Container(
-      width: 150.0,
+      width: 170.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -69,7 +69,7 @@ class _TrailerListState extends State<TrailerList> {
             semanticContainer: true,
             clipBehavior: Clip.antiAliasWithSaveLayer,
             child: Container(
-              width: 150.0,
+              width: 170.0,
               height: 110.0,
               child: Stack(
                 children: <Widget>[
@@ -81,7 +81,15 @@ class _TrailerListState extends State<TrailerList> {
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: Icon(Icons.play_circle_filled,size: 50.0, color: Colors.white54),
+                    child: Icon(Icons.play_circle_filled,size: 50.0, color: Colors.redAccent.withOpacity(0.6)),
+                  ),
+                  Positioned.fill(
+                    child: Material(
+                      color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () { print('youtube: ${trailer.id}'); },
+                        ),
+                      ),
                   )
                 ],
               ),
@@ -101,5 +109,12 @@ class _TrailerListState extends State<TrailerList> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    
+    _mdYoutubeTrailerBloc.dispose();
+    super.dispose();
   }
 }

@@ -7,6 +7,7 @@ import 'package:whats_movies/data/models/movie_list.dart';
 import 'package:whats_movies/data/models/people_list.dart';
 import 'package:whats_movies/data/models/movie_detail_model.dart';
 import 'package:whats_movies/data/models/movie_detail_video.dart';
+import 'package:whats_movies/data/models/media_model.dart';
 
 import 'package:whats_movies/domains/domains.dart';
 
@@ -21,7 +22,7 @@ class MovieApi {
   final PeopleMapper _peopleMapper;
   final MovieDetailMapper _movieDetailMapper;
   final MDVideoMapper _mdVideoMapper;
-
+  final MovieMediaMapper _movieMediaMapper;
 
   final _apiKey = '955a6533e19558c1c73858d0f2d7fb07';
 
@@ -30,12 +31,14 @@ class MovieApi {
     @required MovieMapper movieMapper,
     @required PeopleMapper peopleMapper,
     @required MovieDetailMapper movieDetailMapper,
-    @required MDVideoMapper mdVideoMapper
+    @required MDVideoMapper mdVideoMapper,
+    @required MovieMediaMapper movieMediaMapper
   }): _client = client,
       _movieMapper = movieMapper,
       _peopleMapper = peopleMapper,
       _movieDetailMapper = movieDetailMapper,
-      _mdVideoMapper = mdVideoMapper;
+      _mdVideoMapper = mdVideoMapper,
+      _movieMediaMapper = movieMediaMapper;
 
   Future<List<Movie>> fetchTrendingMovies() async {
 
@@ -128,11 +131,27 @@ class MovieApi {
           dataSorted.add(_mdVideoMapper.mapFromEntity(video));
         }
       });
+
+      return dataSorted;
     } else {
 
       throw Exception('[ERROR] Failed fetch movie detail video by id: $id');
     }
+  }
 
-    return dataSorted;
+  Future<MovieMedia> fetchMovieMedia(int id) async {
+
+    final response = await _client.get('https://api.themoviedb.org/3/movie/$id/images?api_key=$_apiKey');
+
+    if (response.statusCode == 200) {
+
+      print('[GET]fetchMDVideo: '+response.body);
+      final result = MediaModel.fromJson(convert.json.decode(response.body));
+      
+      return _movieMediaMapper.mapFromEntity(result);
+    } else {
+
+      throw Exception('[ERROR] Failed fetch movie media video by id: $id');
+    }    
   }
 }
