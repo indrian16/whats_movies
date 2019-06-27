@@ -12,7 +12,13 @@ abstract class UpcomingMoviesState extends Equatable {
 class UpcomingUnitializedState extends UpcomingMoviesState {
 
   @override
-  String toString() => 'UpcomingUnitialized';
+  String toString() => 'UpcomingUnitializedState';
+}
+
+class UpcomingLoadingState extends UpcomingMoviesState {
+
+  @override
+  String toString() => 'UpcomingLoadingState';
 }
 
 class UpcomingLoadedState extends UpcomingMoviesState {
@@ -22,11 +28,15 @@ class UpcomingLoadedState extends UpcomingMoviesState {
   UpcomingLoadedState(this.movies);
 
   @override
-  String toString() => 'UpcomingLoaded { movies: ${movies.length} }';
+  String toString() => 'UpcomingLoadedState { movies: ${movies.length} }';
 }
 
 class UpcomingErrorState extends UpcomingMoviesState {
 
+  final Exception exception;
+
+  UpcomingErrorState(this.exception);
+
   @override
-  String toString() => 'PopularError';
+  String toString() => 'UpcomingErrorState { exception: $exception }';
 }

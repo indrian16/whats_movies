@@ -41,9 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: TrendingList(
-                trendingMoviesBloc: _trendingMoviesBloc,
-              ),
+              child: TrendingList(),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
@@ -75,9 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  PopularList(
-                    popularMoviesBloc: _popularMoviesBloc,
-                  )
+                  PopularList()
                 ],
               ),
             ),
@@ -111,9 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  UpcomingList(
-                    upcomingMoviesBloc: _upcomingMoviesBloc,
-                  ),
+                  UpcomingList(),
                   SizedBox(height: 16.0)
                 ],
               ),

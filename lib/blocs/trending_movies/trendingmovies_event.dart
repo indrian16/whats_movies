@@ -15,3 +15,12 @@ class FetchTrendingMovies extends TrendingMoviesEvent {
     return 'FetchTrendingMovies';
   }
 }
+
+class RefreshTrendingMovies extends TrendingMoviesEvent {
+
+  @override
+  String toString() {
+    
+    return 'RefreshTrendingMovies';
+  }
+}

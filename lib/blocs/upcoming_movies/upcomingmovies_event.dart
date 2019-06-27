@@ -12,3 +12,9 @@ class FetchUpcomingMovies extends UpcomingMoviesEvent {
   @override
   String toString() => 'FetchUpcomingMovies';
 }
+
+class RefreshUpcomingMovies extends UpcomingMoviesEvent {
+
+  @override
+  String toString() => 'RefreshUpcomingMovies';
+}

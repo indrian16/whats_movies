@@ -18,6 +18,15 @@ class TrendingUnitilizedState extends TrendingMoviesState {
   }
 }
 
+class TrendingLoadingState extends TrendingMoviesState {
+
+  @override
+  String toString() {
+    
+    return 'TrendingLoadingState';
+  }
+}
+
 class TrendingLoadedState extends TrendingMoviesState {
 
   final List<Movie> movies;
@@ -33,9 +42,13 @@ class TrendingLoadedState extends TrendingMoviesState {
 
 class TrendingErrorState extends TrendingMoviesState {
 
+  final Exception exception;
+
+  TrendingErrorState(this.exception);
+
   @override
   String toString() {
     
-    return 'TrendingError';
+    return 'TrendingError { exception: $exception }';
   }
 }

@@ -12,3 +12,9 @@ class FetchPopularMovies extends PopularMoviesEvent {
   @override
   String toString() => 'FetchPopularMovies';
 }
+
+class RefreshPopularMovies extends PopularMoviesEvent {
+
+  @override
+  String toString() => 'RefreshPopularMovies';
+}

@@ -8,10 +8,6 @@ import 'package:whats_movies/screens/movie_detail/movie_detail_page.dart';
 
 class UpcomingList extends StatefulWidget {
 
-  final UpcomingMoviesBloc upcomingMoviesBloc;
-
-  const UpcomingList({Key key, this.upcomingMoviesBloc}) : super(key: key);
-
   @override
   _UpcomingListState createState() => _UpcomingListState();
 }
@@ -24,7 +20,7 @@ class _UpcomingListState extends State<UpcomingList> {
   void initState() {
     super.initState();
     
-    _upcomingMoviesBloc = widget.upcomingMoviesBloc;
+    _upcomingMoviesBloc = BlocProvider.of<UpcomingMoviesBloc>(context);
   }
 
   @override
@@ -34,7 +30,12 @@ class _UpcomingListState extends State<UpcomingList> {
       child: BlocBuilder(
         bloc: _upcomingMoviesBloc,
         builder: (_, UpcomingMoviesState state) {
+
           if (state is UpcomingUnitializedState) {
+            return Center(child: Text('wait'));
+          }
+
+          if (state is UpcomingLoadingState) {
             return Center(child: CircularProgressIndicator());
           }
 
@@ -63,7 +64,7 @@ class _UpcomingListState extends State<UpcomingList> {
                 children: <Widget>[
                   IconButton(
                       onPressed: () =>
-                          _upcomingMoviesBloc.dispatch(FetchUpcomingMovies()),
+                          _upcomingMoviesBloc.dispatch(RefreshUpcomingMovies()),
                       icon: Icon(Icons.refresh, size: 35.0)),
                   Text(
                     'Reload Upcoming movies',

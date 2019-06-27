@@ -7,9 +7,7 @@ import 'package:whats_movies/domains/movie.dart';
 import 'package:whats_movies/screens/movie_detail/movie_detail_page.dart';
 
 class TrendingList extends StatefulWidget {
-  final TrendingMoviesBloc trendingMoviesBloc;
 
-  const TrendingList({Key key, this.trendingMoviesBloc}) : super(key: key);
   @override
   _TrendingListState createState() => _TrendingListState();
 }
@@ -21,7 +19,7 @@ class _TrendingListState extends State<TrendingList> {
   void initState() {
     super.initState();
 
-    _trendingMoviesBloc = widget.trendingMoviesBloc;
+    _trendingMoviesBloc = BlocProvider.of<TrendingMoviesBloc>(context);
   }
 
   @override
@@ -31,7 +29,12 @@ class _TrendingListState extends State<TrendingList> {
       child: BlocBuilder(
         bloc: _trendingMoviesBloc,
         builder: (_, TrendingMoviesState state) {
+
           if (state is TrendingUnitilizedState) {
+            return Center(child: Text('wait'));
+          }
+
+          if (state is TrendingLoadingState) {
             return Center(child: CircularProgressIndicator());
           }
 
@@ -52,7 +55,7 @@ class _TrendingListState extends State<TrendingList> {
                 children: <Widget>[
                   IconButton(
                       onPressed: () =>
-                          _trendingMoviesBloc.dispatch(FetchTrendingMovies()),
+                          _trendingMoviesBloc.dispatch(RefreshTrendingMovies()),
                       icon: Icon(Icons.refresh, size: 35.0)),
                   Text(
                     'Reload Trending movies',

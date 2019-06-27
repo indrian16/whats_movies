@@ -50,7 +50,7 @@ class _MediaItemState extends State<MediaItem> {
                     child: Stack(
                       children: <Widget>[
                         CachedNetworkImage(
-                          imageUrl: state.movieMedia.urlPosters[0],
+                          imageUrl: state.movieMedia.urlPosters.isNotEmpty ? state.movieMedia.urlPosters[0] : 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png',
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
@@ -61,8 +61,7 @@ class _MediaItemState extends State<MediaItem> {
                             child: Chip(
                               label: Text(
                                 'x${state.movieMedia.urlPosters.length}',
-                                style: TextStyle(
-                                    fontFamily: 'Lato', fontSize: 10.0),
+                                style: TextStyle(fontFamily: 'Lato', fontSize: 10.0),
                               ),
                             ),
                           ),
@@ -89,8 +88,9 @@ class _MediaItemState extends State<MediaItem> {
                     child: Stack(
                       children: <Widget>[
                         CachedNetworkImage(
-                          imageUrl: state.movieMedia.urlBackdrops[0],
+                          imageUrl: state.movieMedia.urlBackdrops.isNotEmpty ? state.movieMedia.urlBackdrops[0] : 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png',
                           height: double.infinity,
+                          width: double.infinity,
                           fit: BoxFit.cover,
                         ),
                         Padding(

@@ -8,10 +8,6 @@ import 'package:whats_movies/screens/movie_detail/movie_detail_page.dart';
 
 class PopularList extends StatefulWidget {
 
-  final PopularMoviesBloc popularMoviesBloc;
-
-  const PopularList({Key key, this.popularMoviesBloc}) : super(key: key);
-
   @override
   _PopularListState createState() => _PopularListState();
 }
@@ -24,7 +20,7 @@ class _PopularListState extends State<PopularList> {
   void initState() {
     super.initState();
 
-    _popularMoviesBloc = widget.popularMoviesBloc;
+    _popularMoviesBloc = BlocProvider.of<PopularMoviesBloc>(context);
   }
 
   @override
@@ -34,7 +30,12 @@ class _PopularListState extends State<PopularList> {
       child: BlocBuilder(
         bloc: _popularMoviesBloc,
         builder: (_, PopularMoviesState state) {
+
           if (state is PopularUnitializedState) {
+            return Center(child: Text('wait'));
+          }
+
+          if (state is PopularLoadingState) {
             return Center(child: CircularProgressIndicator());
           }
 
@@ -63,7 +64,7 @@ class _PopularListState extends State<PopularList> {
                 children: <Widget>[
                   IconButton(
                     onPressed: () =>
-                        _popularMoviesBloc.dispatch(FetchPopularMovies()),
+                        _popularMoviesBloc.dispatch(RefreshPopularMovies()),
                     icon: Icon(Icons.refresh, size: 35.0),
                     splashColor: Colors.black,
                   ),

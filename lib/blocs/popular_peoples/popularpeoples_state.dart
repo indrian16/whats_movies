@@ -33,8 +33,7 @@ class LoadedPopularPeoplesState extends PopularPeoplesState {
   }
 
   @override
-  String toString() =>
-      'LoadedPopularPeoplesState { peoples: ${peoples.length} page: $page, hasReachedMax: $hasReachedMax, occuredError: $occuredError }';
+  String toString() =>'LoadedPopularPeoplesState { peoples: ${peoples.length} page: $page, hasReachedMax: $hasReachedMax, occuredError: $occuredError }';
 }
 
 class ErrorPopularPeoplesState extends PopularPeoplesState {

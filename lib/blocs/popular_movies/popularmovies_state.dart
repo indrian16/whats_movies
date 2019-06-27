@@ -15,6 +15,12 @@ class PopularUnitializedState extends PopularMoviesState {
   String toString() => 'PopularUnitialized';
 }
 
+class PopularLoadingState extends PopularMoviesState {
+
+  @override
+  String toString() => 'PopularLoadingState';
+}
+
 class PopularLoadedState extends PopularMoviesState {
 
   final List<Movie> movies;
@@ -27,6 +33,10 @@ class PopularLoadedState extends PopularMoviesState {
 
 class PopularErrorState extends PopularMoviesState {
 
+  final Exception exception;
+
+  PopularErrorState(this.exception);
+
   @override
-  String toString() => 'PopularError';
+  String toString() => 'PopularError { exception: $exception }';
 }
