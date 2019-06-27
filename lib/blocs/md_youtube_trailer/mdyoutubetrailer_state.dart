@@ -31,7 +31,11 @@ class EmptyMDYoutubeTrailerState extends MDYoutubeTrailerState {
 }
 
 class ErrorMDYoutubeTrailerState extends MDYoutubeTrailerState {
+  
+  final Exception exception;
+
+  ErrorMDYoutubeTrailerState(this.exception);
 
   @override
-  String toString() => 'ErrorMDYoutubeTrailerState';
+  String toString() => 'ErrorMDYoutubeTrailerState { exception: $exception }';
 }

@@ -26,6 +26,10 @@ class LoadedMovieDetailState extends MovieDetailState {
 
 class ErrorMovieDetailState extends MovieDetailState {
 
+  final Exception exception;
+
+  ErrorMovieDetailState(this.exception);
+
   @override
-  String toString() => 'ErrorDetailMovieState';
+  String toString() => 'ErrorDetailMovieState { exception: $exception }';
 }

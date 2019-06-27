@@ -32,8 +32,7 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
 
       } catch (e) {
 
-        print(e);
-        yield ErrorMovieDetailState();
+        yield ErrorMovieDetailState(e);
       }
     }
   }

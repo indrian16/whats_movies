@@ -26,6 +26,10 @@ class LoadedMovieMediaState extends MovieMediaState {
 
 class ErrorMovieMediaState extends MovieMediaState {
 
+  final Exception exception;
+
+  ErrorMovieMediaState(this.exception);
+
   @override
-  String toString() => 'ErrorMovieMediaState';
+  String toString() => 'ErrorMovieMediaState { exception: $exception }';
 }

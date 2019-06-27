@@ -39,8 +39,7 @@ class MDYoutubeTrailerBloc extends Bloc<MDYoutubeTrailerEvent, MDYoutubeTrailerS
         }
       } catch (e) {
 
-        print(e);
-        yield ErrorMDYoutubeTrailerState();
+        yield ErrorMDYoutubeTrailerState(e);
       }
     }
   }

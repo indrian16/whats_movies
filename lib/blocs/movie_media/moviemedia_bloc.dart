@@ -31,8 +31,7 @@ class MovieMediaBloc extends Bloc<MovieMediaEvent, MovieMediaState> {
         yield LoadedMovieMediaState(movieMedia: movieMedia);
       } catch (e) {
 
-        print(e);
-        yield ErrorMovieMediaState();
+        yield ErrorMovieMediaState(e);
       }
     }
   }
